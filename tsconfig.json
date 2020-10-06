@@ -3,7 +3,22 @@
     "target": "es5",
     "module": "commonjs",
     "declaration": true,
-    "outDir": "./dist",
-    "strict": true
-  }
+    "outDir": "./lib",
+    "strict": true,
+    "lib": [
+      "dom",
+      "es5",
+      "scripthost",
+      "es2015.promise"
+    ]
+  },
+  "scripts": {
+  "test": "mocha -r ts-node/register tests/**/*.test.ts",
+  "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test"
+},
+  "include": ["src"],
+  "exclude": ["node_modules","**/__tests__/*"],
+  "files": [
+    "./index.ts"
+  ]
 }
