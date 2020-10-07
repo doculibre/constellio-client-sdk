@@ -2,13 +2,6 @@ const axios = require('axios');
 import Login from "../types/common/classes/authentication";
 import {parse} from 'node-html-parser';
 
-interface ErrorAuth {
-    error: string,
-    xhr: any,
-    status: any,
-    errorThrown: any
-}
-
 export const authenticate = async (authenticateObject: Login): Promise<any> => {
 
     const generateTokenUrl = authenticateObject.url + "/generateToken";
