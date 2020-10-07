@@ -1,5 +1,6 @@
 const axios = require('axios');
-import Login from "../type/common/authentication";
+import Login from "../types/common/classes/authentication";
+import {parse} from 'node-html-parser';
 
 interface ErrorAuth {
     error: string,
@@ -10,28 +11,32 @@ interface ErrorAuth {
 
 export const authenticate = async (authenticateObject: Login): Promise<any> => {
 
-    const generateTokenUrl = authenticateObject.url + "/generateTeamsToken";
-    let config ={
-        method: 'post',
-        url: generateTokenUrl,
-        data: authenticateObject
+    const generateTokenUrl = authenticateObject.url + "/generateToken";
+    const params = {
+        username: authenticateObject.username,
+        password: authenticateObject.password,
+        duration: authenticateObject.duration || "1h"
     }
+
     return new Promise((resolve, reject) => {
-        axios(config)
-            .then(function (data: any) {
-                //let data:any = response.data;
-                let error: any = data.getElementsByTagName("error");
+        axios.get(generateTokenUrl, {params})
+            .then(function (response: any) {
+                let data: any = parse(response.data);
+                let error: any = data.querySelector("error");
                 if (error && error.length > 0) {
                     reject({error: error.textContent});
                 } else {
-                    let tokenHtml: any = data.getElementsByTagName("token");
-                    let serviceKeyHtml: any = data.getElementsByTagName("serviceKey")
-                    if (tokenHtml.length > 0 && serviceKeyHtml.length > 0) {
-                        let token: string = tokenHtml[0].textContent;
-                        let serviceKey: string = serviceKeyHtml[0].textContent;
+                    let tokenHtml: HTMLElement = data.querySelector("token");
+                    let serviceKeyHtml: HTMLElement = data.querySelector("serviceKey");
+                    if (tokenHtml && serviceKeyHtml) {
+                        let token: string = tokenHtml.innerText;
+                        let serviceKey: string = serviceKeyHtml.innerText;
                         resolve({token: token, serviceKey: serviceKey});
                     } else {
-                        reject({error: "no token sent"});
+                        reject({
+                            error: "no token sent",
+                            message: response.data
+                        });
                     }
                 }
             },)
