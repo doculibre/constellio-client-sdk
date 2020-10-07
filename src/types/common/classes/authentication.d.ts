@@ -3,6 +3,7 @@ export interface Authentication {
     serviceKey?: string;
     duration?: string;
     error?:string;
+    url?: string,
 }
 
 export default interface Login {
