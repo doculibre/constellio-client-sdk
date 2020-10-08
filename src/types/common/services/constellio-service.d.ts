@@ -4,7 +4,15 @@ import Folder, { FolderQueryResults } from "../classes/folder";
 import Query, { QueryResults } from "../classes/query";
 import Record from "../classes/record"
 import Schema from "../classes/schema";
-import Login from "../classes/authentication";
+import Login, {Authentication} from "../classes/authentication";
+
+interface getCollectionsFunc {
+    (authenticationObject: Authentication): Promise<ConstellioCollection[]>;
+}
+
+interface authenticateFunc {
+    (authenticateObject: Login): Promise<any>;
+}
 
 export default class ConstellioService{
     static authenticate(authenticateObject: Login):Promise<any>
