@@ -2,9 +2,10 @@ import  { Authentication } from "../types/common/classes/authentication";
 import ConstellioCollection from "../types/common/classes/constellio-collection";
 import ConstellioService from "../types/common/services/constellio-service";
 import Login from "../types/common/classes/authentication";
+import {getCollectionsFunc} from "../types/common/services/constellio-service"
 import axios from 'axios';
 
-export const getCollections = (authenticationObject:Authentication):Promise<ConstellioCollection[]> => {
+export const getCollections:getCollectionsFunc = (authenticationObject:Authentication):Promise<ConstellioCollection[]> => {
     let headers = buildAuthenticatedHeader(authenticationObject.token);
     const generateUrl = authenticationObject.url + "/rest/v1/collections";
     const params = {
