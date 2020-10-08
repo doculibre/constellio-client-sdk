@@ -9,6 +9,7 @@
 /// <reference path="./classes/query.d.ts" />
 /// <reference path="./classes/record.d.ts" />
 /// <reference path="./classes/schema.d.ts" />
+/// <reference path="./classes/authentication.d.ts" />
 
 /*
 * Services

@@ -4,8 +4,10 @@ import Folder, { FolderQueryResults } from "../classes/folder";
 import Query, { QueryResults } from "../classes/query";
 import Record from "../classes/record"
 import Schema from "../classes/schema";
+import Login from "../classes/authentication";
 
 export default class ConstellioService{
+    static authenticate(authenticateObject: Login):Promise<any>
     static getCollections():ConstellioCollection[]
 
     static search(query:Query, schemaTypes:string[]):QueryResults
