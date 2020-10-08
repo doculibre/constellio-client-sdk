@@ -1,0 +1,1 @@
+export {authenticate} from "./src/services/AuthenticationService"
