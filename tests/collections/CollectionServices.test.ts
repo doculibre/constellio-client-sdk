@@ -78,7 +78,7 @@ describe('Collections', function () {
             {'Content-Type': 'application/json'}, '[]']), 0);
     });
 
-    it("on failure password, should return error", (done) => {
+    it("on failure get, should return error", (done) => {
         const error = new Promise((r) => r({data: null}));
         sandbox.stub(axios, "get").returns(error);
         getCollections(stubAuthenticate)
