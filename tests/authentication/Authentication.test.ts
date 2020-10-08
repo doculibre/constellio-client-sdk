@@ -2,6 +2,7 @@ import {authenticate} from '../../src/services/AuthenticationService';
 import {assert, expect} from 'chai';
 import sinon = require('sinon');
 import {Authentication} from "../../src/types/common/classes/authentication";
+import {API_VERSION} from "../../src/constant";
 
 const axios = require('axios');
 
@@ -25,7 +26,7 @@ describe('authenticate', function () {
     });
 
     const verifyHealth = async (): Promise<any> => {
-        let localHostHealth = await axios.get("http://localhost:7070/constellio/rest/v1/health");
+        let localHostHealth = await axios.get("http://localhost:7070/constellio/rest/"+API_VERSION+"/health");
         return localHostHealth;
     }
 

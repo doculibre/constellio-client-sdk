@@ -4,6 +4,7 @@ import {assert, expect} from 'chai';
 import sinon = require('sinon');
 import ConstellioCollection from "../../src/types/common/classes/constellio-collection";
 import axios from 'axios';
+import {API_VERSION} from "../../src/constant";
 
 describe('Collections', function () {
     let sandbox: any;
@@ -25,7 +26,7 @@ describe('Collections', function () {
     });
 
     const verifyHealth = async (): Promise<any> => {
-        let localHostHealth = await axios.get("http://localhost:7070/constellio/rest/v1/health");
+        let localHostHealth = await axios.get("http://localhost:7070/constellio/rest/"+API_VERSION+"/health");
         return localHostHealth;
     }
 
