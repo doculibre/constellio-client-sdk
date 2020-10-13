@@ -1,5 +1,10 @@
-tsconfig.json
-src
 tests
 .gitignore
 samples
+
+.*
+**/tsconfig.json
+**/webpack.config.js
+
+node_modules
+src
