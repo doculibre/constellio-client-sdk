@@ -1,5 +1,5 @@
-import {getCollections} from '../../src/services/CollectionService';
-import {authenticate} from '../../src/services/AuthenticationService';
+import {getCollections} from '../../src/services/collections/CollectionService';
+import {authenticate} from '../../src/services/authentication/AuthenticationService';
 import {assert, expect} from 'chai';
 import sinon = require('sinon');
 import ConstellioCollection from "../../src/types/common/classes/constellio-collection";

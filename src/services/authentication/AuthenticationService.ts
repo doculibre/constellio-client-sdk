@@ -1,7 +1,7 @@
 const axios = require('axios');
-import Login from "../types/common/classes/authentication";
+import Login from "../../types/common/classes/authentication";
 import {parse} from 'node-html-parser';
-import {authenticateFunc} from "../types/common/services/constellio-service"
+import {authenticateFunc} from "../../types/common/services/constellio-service"
 
 export const authenticate:authenticateFunc = async (authenticateObject: Login): Promise<any> => {
 

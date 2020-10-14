@@ -8,8 +8,8 @@ export class RecordReference{
     id:string;
     code:string;
     title:string;
-    description:string;
-    parent:RecordReference;
+    description?:string;
+    parent?:RecordReference;
 }
 
 export function getRecord(id:string):Record

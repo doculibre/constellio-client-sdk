@@ -1,1 +1,1 @@
-export {authenticate} from "./src/services/AuthenticationService"
+export {authenticate} from "./src/services/authentication/AuthenticationService"
