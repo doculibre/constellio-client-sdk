@@ -1,12 +1,10 @@
-import  { Authentication } from "../types/common/classes/authentication";
+import {Authentication} from "../types/common/classes/authentication";
 import ConstellioCollection from "../types/common/classes/constellio-collection";
-import ConstellioService from "../types/common/services/constellio-service";
-import Login from "../types/common/classes/authentication";
-import {getCollectionsFunc} from "../types/common/services/constellio-service"
+import {getCollectionsFunc} from "../types/common/services/constellio-service";
 import axios from 'axios';
 
 export const getCollections:getCollectionsFunc = (authenticationObject:Authentication):Promise<ConstellioCollection[]> => {
-    let headers = buildAuthenticatedHeader(authenticationObject.token);
+    let headers = buildConstellioAuthenticatedHeader(authenticationObject.token);
     const generateUrl = authenticationObject.url + "/rest/v1/collections";
     const params = {
         serviceKey: authenticationObject.serviceKey
@@ -24,12 +22,4 @@ export const getCollections:getCollectionsFunc = (authenticationObject:Authentic
             reject({message:error, error:"Could not fetch Constellio collections"});
         });
     });
-}
-
-const buildAuthenticatedHeader = (token:string | undefined) =>{
-
-    return {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + token
-    };
 }
