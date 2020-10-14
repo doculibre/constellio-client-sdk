@@ -13,7 +13,7 @@ export const authenticate:authenticateFunc = async (authenticateObject: Login): 
     }
 
     return new Promise((resolve, reject) => {
-        axios.get(generateTokenUrl, {params})
+        axios.get(generateTokenUrl, {params,headers:{"Access-Control-Allow-Origin": "*"}})
             .then(function (response: any) {
                 let data: any = parse(response.data);
                 let error: any = data.querySelector("error");

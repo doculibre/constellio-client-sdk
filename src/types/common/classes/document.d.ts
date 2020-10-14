@@ -2,9 +2,6 @@ import Query, { AbstractQueryResults } from "./query";
 import Record from "./record";
 
 export default class Document extends Record{
-    record:Record
-
-    constructor(record:Record)
 }
 
 export class DocumentQueryResults extends AbstractQueryResults<Document>{}

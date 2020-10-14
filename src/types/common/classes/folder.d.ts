@@ -2,9 +2,6 @@ import Query, { AbstractQueryResults } from "./query";
 import Record from "./record";
 
 export default class Folder extends Record{
-    record:Record;
-
-    constructor(record:Record);
 }
 
 export class FolderQueryResults extends AbstractQueryResults<Folder>{}
