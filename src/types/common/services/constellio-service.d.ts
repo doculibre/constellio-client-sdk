@@ -14,6 +14,10 @@ interface authenticateFunc {
     (authenticateObject: Login): Promise<any>;
 }
 
+interface getSchemaFunc {
+    (authenticationObject: Authentication, collection:string, schemaCode:string): Promise<Schema>;
+}
+
 export default class ConstellioService{
     static authenticate(authenticateObject: Login):Promise<any>
     static getCollections():ConstellioCollection[]
