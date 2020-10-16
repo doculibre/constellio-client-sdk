@@ -4,16 +4,22 @@ import {API_VERSION} from "../../src/constant";
 import {authenticate} from "../../src";
 import {assert, expect } from "chai";
 import {getSchema} from "../../src/services/SchemaService";
-import {errorMonitor} from "events";
 
 describe('getSchemas Tests', function () {
     const serverUrl = "http://localhost:7070/constellio";
 
     const collectionCode = `zeCollection`;
-    const schemaCode = `document`;
+    const schemaCode = `document_default`;
     const generateTokenResponse = {data:`<?xml version="1.0" encoding="UTF-8"?><response><serviceKey>agent_admin</serviceKey><token>5362b9be-0e55-11eb-8583-b5cbb387177e</token></response>`};
 
-    const getSchemaResponse = {data:{code:schemaCode, title:`Document`, metadatas:[{code:`title_s`, type:'string'},{code:`schema_s`, type:`string`}]}};
+    const getSchemaResponse = {data:
+`<?xml version="1.0" encoding="UTF-8"?>
+<schema code="document_default" collection="zeCollection" label="Document">
+    <metadata code="actualDepositDate" title="Date de versement réelle" multivalue="false" type="DATE" solr-field="actualDepositDate_da" label="Date de versement réelle"/>
+    <metadata code="actualDepositDateEntered" title="Date de conservation actuelle entrée" multivalue="false" type="DATE" solr-field="actualDepositDateEntered_da" label="Date de conservation actuelle entrée"/>
+    <metadata code="actualDestructionDate" title="Date de destruction réelle" multivalue="false" type="DATE" solr-field="actualDestructionDate_da" label="Date de destruction réelle"/>
+</schema>
+`};
 
     let sandbox:any;
 
@@ -29,7 +35,7 @@ describe('getSchemas Tests', function () {
 
         sandbox.stub(axios, 'get')
             .withArgs(`${serverUrl}/generateToken`, sinon.match.any).resolves(Promise.resolve(generateTokenResponse))
-            .withArgs(`${serverUrl}/rest/v2/schemas/${collectionCode}/${schemaCode}`, sinon.match.any).resolves(Promise.resolve(getSchemaResponse));
+            .withArgs(`${serverUrl}/getSchemaMetadatas?collection=${collectionCode}&schema=${schemaCode}`).resolves(Promise.resolve(getSchemaResponse));
 
         await testGetSchema();
     });
