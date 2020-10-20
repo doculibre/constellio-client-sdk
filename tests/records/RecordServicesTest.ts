@@ -1,12 +1,12 @@
-import {getFolder, getFolders, getFoldersSummaries, getFolderSummary} from '../../src/services/folders/FolderService';
-import {testFolder1, testFolder2, testFolder3} from './testFoldersObjects';
+import {getRecord, getRecords, getRecordsSummaries, getRecordSummary} from '../../src/services/records/RecordService';
+import {testRecord1, testRecord2, testRecord3} from './testRecordsObjects';
 import {authenticate} from '../../src/services/authentication/AuthenticationService';
 import {assert, expect} from 'chai';
 import sinon = require('sinon');
 import axios from 'axios';
 import {API_VERSION} from "../../src/constant";
 
-describe('Folders', function () {
+describe('Records', function () {
     let sandbox: any;
     let server: any;
     let stubAuthenticate = {
@@ -30,7 +30,7 @@ describe('Folders', function () {
         return localHostHealth;
     }
 
-    it('should login with localhost when healthy and test getFolder', function () {
+    it('should login with localhost when healthy and test getRecord', function () {
         let testLocal = this;
         let url = "http://localhost:7070/constellio";
         verifyHealth().then((isHealthy) => {
@@ -41,10 +41,10 @@ describe('Folders', function () {
                     password: "password"
                 };
                 let result = authenticate(testLogin);
-                 result.then(function (auth) {
+                result.then(function (auth) {
                     console.log(auth);
                     auth.url = url;
-                    getFolder(auth, "A01").then(data => {
+                    getRecord(auth, "A01").then(data => {
                         console.log(data);
                         expect(data).to.not.equal(null);
                         expect(data).to.not.equal(null);
@@ -66,7 +66,7 @@ describe('Folders', function () {
         );
     });
 
-    it('should login with localhost when healthy and test getFolders', function () {
+    it('should login with localhost when healthy and test getRecords', function () {
         let testLocal = this;
         let url = "http://localhost:7070/constellio";
         verifyHealth().then((isHealthy) => {
@@ -80,7 +80,7 @@ describe('Folders', function () {
                 result.then(function (auth) {
                     console.log(auth);
                     auth.url = url;
-                    getFolders(auth, ["A01", "A02"]).then(data => {
+                    getRecords(auth, ["A01", "A02"]).then(data => {
                         console.log(data);
                         expect(data).to.not.equal(null);
                         expect(data).to.not.equal(null);
@@ -101,22 +101,22 @@ describe('Folders', function () {
         );
     });
 
-    it("on get folders with authentication, should succeed", (done) => {
-        const resolved = new Promise((r) => r({data: testFolder1}));
+    it("on get records with authentication, should succeed", (done) => {
+        const resolved = new Promise((r) => r({data: testRecord1}));
         sandbox.stub(axios, "get").returns(resolved);
-        getFolder(stubAuthenticate, "A01")
+        getRecord(stubAuthenticate, "A01")
             .then((result) => {
-                testResultSuccess(result, "folderTest1", "AA01");
+                testResultSuccess(result, "recordTest1", "AA01");
             })
             .then(done, done);
         setTimeout(() => server.respond([200,
             {'Content-Type': 'application/json'}, '[]']), 0);
     });
 
-    it("on failure get folders, should return error", (done) => {
+    it("on failure get records, should return error", (done) => {
         const error = new Promise((r) => r({data: null}));
         sandbox.stub(axios, "get").returns(error);
-        getFolder(stubAuthenticate, "A01")
+        getRecord(stubAuthenticate, "A01")
             .catch((error) => {
                 expect(error.message)
                     .to.equal(null);
@@ -126,15 +126,15 @@ describe('Folders', function () {
             {'Content-Type': 'application/json'}, '[]']), 0);
     });
 
-    it("on get folders with authentication, should succeed", (done) => {
-        const resolved = new Promise((r) => r({data: [testFolder1,testFolder2,testFolder3]}));
+    it("on get records with authentication, should succeed", (done) => {
+        const resolved = new Promise((r) => r({data: [testRecord1,testRecord2,testRecord3]}));
         sandbox.stub(axios, "get").returns(resolved);
-        getFolders(stubAuthenticate, ["A01", "A02", "A03"])
+        getRecords(stubAuthenticate, ["A01", "A02", "A03"])
             .then((results) => {
                 let i = 0;
                 for (let result in results) {
                     i++;
-                    testResultSuccess(result, "folderTest" + i, "AA0" + i);
+                    testResultSuccess(result, "recordTest" + i, "AA0" + i);
                 }
             })
             .then(done, done);
@@ -142,10 +142,10 @@ describe('Folders', function () {
             {'Content-Type': 'application/json'}, '[]']), 0);
     });
 
-    it("on failure get folders, should return error", (done) => {
+    it("on failure get records, should return error", (done) => {
         const error = new Promise((r) => r({data: null}));
         sandbox.stub(axios, "get").returns(error);
-        getFolders(stubAuthenticate, ["A01", "A02", "A03"])
+        getRecords(stubAuthenticate, ["A01", "A02", "A03"])
             .catch((error) => {
                 expect(error.message)
                     .to.equal(null);
@@ -155,22 +155,22 @@ describe('Folders', function () {
             {'Content-Type': 'application/json'}, '[]']), 0);
     });
 
-    it("on get folders summary with authentication, should succeed", (done) => {
-        const resolved = new Promise((r) => r({data: testFolder1}));
+    it("on get records summary with authentication, should succeed", (done) => {
+        const resolved = new Promise((r) => r({data: testRecord1}));
         sandbox.stub(axios, "get").returns(resolved);
-        getFolderSummary(stubAuthenticate, "A01")
+        getRecordSummary(stubAuthenticate, "A01")
             .then((result) => {
-                testResultSuccess(result, "folderTest1", "AA01");
+                testResultSuccess(result, "recordTest1", "AA01");
             })
             .then(done, done);
         setTimeout(() => server.respond([200,
             {'Content-Type': 'application/json'}, '[]']), 0);
     });
 
-    it("on failure get folders summary, should return error", (done) => {
+    it("on failure get records summary, should return error", (done) => {
         const error = new Promise((r) => r({data: null}));
         sandbox.stub(axios, "get").returns(error);
-        getFolderSummary(stubAuthenticate, "A01")
+        getRecordSummary(stubAuthenticate, "A01")
             .catch((error) => {
                 expect(error.message)
                     .to.equal(null);
@@ -180,15 +180,15 @@ describe('Folders', function () {
             {'Content-Type': 'application/json'}, '[]']), 0);
     });
 
-    it("on get folders summaries with authentication, should succeed", (done) => {
-        const resolved = new Promise((r) => r({data: [testFolder1,testFolder2,testFolder3]}));
+    it("on get records summaries with authentication, should succeed", (done) => {
+        const resolved = new Promise((r) => r({data: [testRecord1,testRecord2,testRecord3]}));
         sandbox.stub(axios, "get").returns(resolved);
-        getFoldersSummaries(stubAuthenticate, ["A01", "A02", "A03"])
+        getRecordsSummaries(stubAuthenticate, ["A01", "A02", "A03"])
             .then((results) => {
                 let i = 0;
                 for (let result in results) {
                     i++;
-                    testResultSuccess(result, "folderTest" + i, "AA0" + i);
+                    testResultSuccess(result, "recordTest" + i, "AA0" + i);
                 }
             })
             .then(done, done);
@@ -196,10 +196,10 @@ describe('Folders', function () {
             {'Content-Type': 'application/json'}, '[]']), 0);
     });
 
-    it("on failure get folders summaries, should return error", (done) => {
+    it("on failure get records summaries, should return error", (done) => {
         const error = new Promise((r) => r({data: null}));
         sandbox.stub(axios, "get").returns(error);
-        getFoldersSummaries(stubAuthenticate, ["A01", "A02", "A03"])
+        getRecordsSummaries(stubAuthenticate, ["A01", "A02", "A03"])
             .catch((error) => {
                 expect(error.message)
                     .to.equal(null);

@@ -2,3 +2,4 @@
 /_bundles/
 /node_modules/
 /.idea/
+/.nyc_output/

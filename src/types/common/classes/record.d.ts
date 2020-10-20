@@ -18,10 +18,18 @@ export class RecordReference {
     parent?: RecordReference;
 }
 
-export function getRecord(id: string): Record
+export interface getRecordFunc {
+    (authenticationObject: Authentication, id: string): Promise<Record>;
+}
 
-export function getRecords(ids: string[]): Record[]
+export interface getRecordsFunc {
+    (authenticationObject: Authentication, ids: string[]): Promise<Record[]>;
+}
 
-export function getRecordSummary(id: string): Record
+export interface getRecordSummaryFunc {
+    (authenticationObject: Authentication, id: string): Promise<Record>;
+}
 
-export function getRecordsSummaries(ids: string[]): Record[]
+export interface getRecordsSummariesFunc {
+    (authenticationObject: Authentication, ids: string[]): Promise<Record[]>;
+}

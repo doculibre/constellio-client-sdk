@@ -6,22 +6,6 @@ import Record from "../classes/record"
 import Schema from "../classes/schema";
 import Login, {Authentication} from "../classes/authentication";
 
-export interface getRecordFunc {
-    (authenticationObject: Authentication, id: string): Promise<Record>;
-}
-
-export interface getRecordsFunc {
-    (authenticationObject: Authentication, ids: string[]): Promise<Record[]>;
-}
-
-export interface getRecordSummaryFunc {
-    (authenticationObject: Authentication, id: string): Promise<Record>;
-}
-
-export interface getRecordsSummariesFunc {
-    (authenticationObject: Authentication, ids: string[]): Promise<Record[]>;
-}
-
 export interface getCollectionsFunc {
     (authenticationObject: Authentication): Promise<ConstellioCollection[]>;
 }

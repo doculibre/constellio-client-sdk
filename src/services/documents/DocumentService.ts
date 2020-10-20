@@ -94,7 +94,7 @@ const buildAuthenticatedHeader = (token: string | undefined): any => {
 }
 
 const buildIdsParam = (ids: string[]): string => {
-    return ids.join(",")
+    return ids.join(",");
 }
 
 const buildDocumentRecord = (record: Document): Document => {
