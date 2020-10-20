@@ -1,10 +1,11 @@
 import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
+    LOGOUT
 } from "../actions/types";
 import {User} from "../types/user";
 
-const user:any = localStorage.getItem('user')?JSON.parse(localStorage.getItem('user') || "") : {isLoggedIn:false};
+const user:any = localStorage.getItem('user');
 
 const initialState:User = user
     ? {isLoggedIn: true, user}
@@ -21,6 +22,12 @@ export default function (state = initialState, action: any) {
                 user: payload.user,
             };
         case LOGIN_FAIL:
+            return {
+                ...state,
+                isLoggedIn: false,
+                user: null,
+            };
+        case LOGOUT:
             return {
                 ...state,
                 isLoggedIn: false,

@@ -41,14 +41,49 @@ describe('Folders', function () {
                     password: "password"
                 };
                 let result = authenticate(testLogin);
-                result.then(function (auth) {
+                 result.then(function (auth) {
                     console.log(auth);
                     auth.url = url;
                     getFolder(auth, "A01").then(data => {
                         console.log(data);
                         expect(data).to.not.equal(null);
                         expect(data).to.not.equal(null);
-                        expect(data).exist(data.title);
+                        expect(data.title).to.not.equal(null);
+                    }).catch(error => {
+                        assert.fail(error);
+                        expect(error).exist(error.message);
+                    })
+                }, function (error) {
+                    assert.fail(error);
+                    expect(error).exist(error.message);
+                });
+            } else {
+                testLocal.skip();
+            }
+        }).catch((error) => {
+                testLocal.skip();
+            }
+        );
+    });
+
+    it('should login with localhost when healthy and test getFolders', function () {
+        let testLocal = this;
+        let url = "http://localhost:7070/constellio";
+        verifyHealth().then((isHealthy) => {
+            if (isHealthy && isHealthy.status === 204) {
+                let testLogin = {
+                    url,
+                    username: "admin",
+                    password: "password"
+                };
+                let result = authenticate(testLogin);
+                result.then(function (auth) {
+                    console.log(auth);
+                    auth.url = url;
+                    getFolders(auth, ["A01", "A02"]).then(data => {
+                        console.log(data);
+                        expect(data).to.not.equal(null);
+                        expect(data).to.not.equal(null);
                     }).catch(error => {
                         assert.fail(error);
                         expect(error).exist(error.message);

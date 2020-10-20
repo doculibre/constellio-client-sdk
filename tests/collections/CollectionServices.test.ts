@@ -47,8 +47,8 @@ describe('Collections', function () {
                     getCollections(auth).then(data => {
                         console.log(data);
                         expect(data).to.not.equal(null);
-                        expect(data).exist(data[0].code);
-                        expect(data).exist(data[0].title);
+                        let collection = data[0];
+                        expect(collection).to.have.all.keys('code','name','languages');
                     }).catch(error => {
                         assert.fail(error);
                         expect(error).exist(error.message);

@@ -1,23 +1,22 @@
 import {
-    LOGIN_SUCCESS,
-    LOGIN_FAIL,
-    LOGOUT,
-    SET_MESSAGE,
+    COLLECTION_RESPONSE,
+    COLLECTION_FAILURE,
+    SET_MESSAGE
 } from "./types";
 
-import AuthService from "../services/auth.service";
+import CollectionService from "../services/collection.service";
 
-export const login = (username:string, password:string, url:string) => (dispatch:any) => {
-    return AuthService.login(username, password, url).then(
-        (data:any) => {
+export const getCollections = (token: string, id: string[]) => (dispatch: any) => {
+    return CollectionService.getConstellioCollections(token).then(
+        (data: any) => {
             dispatch({
-                type: LOGIN_SUCCESS,
-                payload: { user: data },
+                type: COLLECTION_RESPONSE,
+                payload: {data: data},
             });
 
             return Promise.resolve();
         },
-        (error:any) => {
+        (error: any) => {
             let message =
                 (error.response &&
                     error.response.data &&
@@ -26,7 +25,7 @@ export const login = (username:string, password:string, url:string) => (dispatch
 
             message = message || "Constellio might be down!"
             dispatch({
-                type: LOGIN_FAIL,
+                type: COLLECTION_FAILURE,
             });
 
             dispatch({
@@ -37,12 +36,4 @@ export const login = (username:string, password:string, url:string) => (dispatch
             return Promise.reject();
         }
     );
-};
-
-export const logout = () => (dispatch:any) => {
-    AuthService.logout();
-
-    dispatch({
-        type: LOGOUT,
-    });
 };

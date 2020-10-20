@@ -6,43 +6,6 @@ import Record from "../classes/record"
 import Schema from "../classes/schema";
 import Login, {Authentication} from "../classes/authentication";
 
-interface getCollectionsFunc {
-    (authenticationObject: Authentication): Promise<ConstellioCollection[]>;
-}
-
-interface authenticateFunc {
-    (authenticationObject: Login): Promise<any>;
-}
-
-interface getFolderFunc {
-    (authenticationObject: Authentication, id: string): Promise<Folder>;
-}
-
-interface getFoldersFunc {
-    (authenticationObject: Authentication, ids: string[]): Promise<Folder[]>;
-}
-
-interface getFolderSummaryFunc {
-    (authenticationObject: Authentication, id: string): Promise<Folder>;
-}
-
-interface getFoldersSummariesFunc {
-    (authenticationObject: Authentication, ids: string[]): Promise<Folder[]>;
-}
-
-interface getDocumentsFunc {
-    (authenticationObject: Authentication, ids: string[]): Promise<Document[]>;
-}
-interface getDocumentFunc {
-    (authenticationObject: Authentication, id: string): Promise<Document>;
-}
-interface getDocumentSummaryFunc {
-    (authenticationObject: Authentication, id: string): Promise<Document>;
-}
-interface getDocumentsSummariesFunc {
-    (authenticationObject: Authentication, ids: string[]): Promise<Document[]>;
-}
-
 export default class ConstellioService {
     static authenticate(authenticateObject: Login): Promise<any>
 

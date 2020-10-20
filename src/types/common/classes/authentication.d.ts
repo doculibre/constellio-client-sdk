@@ -12,3 +12,7 @@ export default interface Login {
     password: string,
     duration?: string
 }
+
+interface authenticateFunc {
+    (authenticationObject: Login): Promise<any>;
+}

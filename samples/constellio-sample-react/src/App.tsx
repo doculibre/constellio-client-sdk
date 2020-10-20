@@ -7,15 +7,22 @@ import "./App.css";
 
 import Login from "./components/Login";
 import Home from "./components/Home";
+import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
+import logo from './Logo.png'
 
 import { history } from "./components/helpers/history";
 import {User} from "./types/user";
+import { Dropdown } from "react-bootstrap";
+import CollectionService from "./services/collection.service";
 
 const App = () => {
 
-  const { user: currentUser } = useSelector<any,User>((state) => state.auth);
+    const { user: currentUser } = useSelector<any,any>((state) => state.auth);
   const dispatch = useDispatch();
+
+
+  const [collections, setCollections] = useState([]);
 
   useEffect(() => {
     history.listen((location) => {
@@ -28,32 +35,59 @@ const App = () => {
     }
   }, [currentUser]);
 
+  useEffect(() => {
+    if (currentUser) {
+      let user = JSON.parse(currentUser || "{}");
+      CollectionService.getConstellioCollections(user.token).then(
+          (response: any) => {
+
+            setCollections(response);
+          },
+          (error: any) => {
+            const _content =
+                (error.response && error.response.data) ||
+                error.message ||
+                error.toString();
+          }
+      )
+    }
+  }, []);
+
   const logOut = () => {
+    dispatch(logout());
   };
+
+  let options;
+  if(collections){
+    options = collections.map((coll:any) => {
+         return  (<option value={coll.code || "no value"} label={coll.name || "no name"}></option>)
+        }
+    )
+  }
 
   return (
       <Router history={history}>
         <div>
           <nav className="navbar navbar-expand navbar-dark bg-dark">
-            <Link to={"/"} className="navbar-brand">
-              bezKoder
-            </Link>
+            <a href="/" className="navbar-brand">
+              <img src={logo} alt="Logo" />;
+            </a>
             <div className="navbar-nav mr-auto">
               <li className="nav-item">
-                <Link to={"/home"} className="nav-link">
+                <a href="/home" className="nav-link">
                   Home
-                </Link>
+                </a>
               </li>
             </div>
 
             {currentUser ? (
                 <div className="navbar-nav ml-auto">
-                  <li className="nav-item">
-                    <Link to={"/profile"} className="nav-link">
-                      {currentUser.username}
-                    </Link>
+                  <li className="nav-far-item">
+                    <select className="nav-select" name="collections" id="collectionsConstellio">
+                      {options}
+                    </select>
                   </li>
-                  <li className="nav-item">
+                  <li className="nav-far-item">
                     <a href="/login" className="nav-link" onClick={logOut}>
                       LogOut
                     </a>
@@ -61,16 +95,10 @@ const App = () => {
                 </div>
             ) : (
                 <div className="navbar-nav ml-auto">
-                  <li className="nav-item">
-                    <Link to={"/login"} className="nav-link">
+                  <li className="nav-far-item ">
+                    <a href="/login" className="nav-link" >
                       Login
-                    </Link>
-                  </li>
-
-                  <li className="nav-item">
-                    <Link to={"/register"} className="nav-link">
-                      Sign Up
-                    </Link>
+                    </a>
                   </li>
                 </div>
             )}

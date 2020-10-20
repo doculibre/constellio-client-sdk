@@ -1,7 +1,6 @@
 const axios = require('axios');
-import Login from "../../types/common/classes/authentication";
+import Login, {authenticateFunc} from "../../types/common/classes/authentication";
 import {parse} from 'node-html-parser';
-import {authenticateFunc} from "../../types/common/services/constellio-service"
 
 export const authenticate:authenticateFunc = async (authenticateObject: Login): Promise<any> => {
 
@@ -13,7 +12,7 @@ export const authenticate:authenticateFunc = async (authenticateObject: Login): 
     }
 
     return new Promise((resolve, reject) => {
-        axios.get(generateTokenUrl, {params,headers:{"Access-Control-Allow-Origin": "*"}})
+        axios.get(generateTokenUrl, {params})
             .then(function (response: any) {
                 let data: any = parse(response.data);
                 let error: any = data.querySelector("error");

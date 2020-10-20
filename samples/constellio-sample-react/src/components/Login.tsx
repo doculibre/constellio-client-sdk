@@ -4,29 +4,16 @@ import {Redirect} from 'react-router-dom';
 import {useForm} from "react-hook-form";
 
 import {login} from "../actions/auth";
-import {User} from "../types/user";
-import {IRootMessage, Message} from "../types/message";
 import {LoginInfo} from "../types/LoginInfo";
-
-const required = (value: string) => {
-    if (!value) {
-        return (
-            <div className="alert alert-danger" role="alert">
-                This field is required!
-            </div>
-        );
-    }
-};
+import {CONSTELLIO_URL} from "../config";
 
 const Login = (props: any) => {
     const {register, handleSubmit} = useForm<LoginInfo>()
 
     const [loading, setLoading] = useState(false);
 
-    const user = useSelector<User, any>(state => state.user);
-    const isLoggedIn: boolean = user && user.isLoggedIn;
-    const messageRoot = useSelector<IRootMessage, Message>(state => state.message);
-    const message = messageRoot && messageRoot.message;
+    const { isLoggedIn } = useSelector<any,any>(state => state.auth);
+    const { message } = useSelector<any,any>(state => state.message);
 
     const dispatch: any = useDispatch();
 
@@ -37,6 +24,8 @@ const Login = (props: any) => {
 
         dispatch(login(info.username, info.password, info.url))
             .then(() => {
+                props.history.push("/home");
+                window.location.reload();
             })
             .catch(() => {
                 setLoading(false);
@@ -44,7 +33,7 @@ const Login = (props: any) => {
     };
 
     if (isLoggedIn) {
-        return <Redirect to="/profile"/>;
+        return <Redirect to="/home"/>;
     }
 
     return (
@@ -60,10 +49,11 @@ const Login = (props: any) => {
                     <div className="form-group">
                         <label htmlFor="url">url Constellio</label>
                         <input
-                            type="text"
+                            type="hidden"
                             className="form-control"
                             name="url"
                             ref={register({required: true})}
+                            value={CONSTELLIO_URL}
                         />
                     </div>
 

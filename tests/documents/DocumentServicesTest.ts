@@ -50,11 +50,46 @@ describe('Documents', function () {
                 result.then(function (auth) {
                     console.log(auth);
                     auth.url = url;
-                    getDocument(auth, "00000001").then(data => {
+                    getDocument(auth, "A01_numericDocumentWithSameCopy").then(data => {
                         console.log(data);
                         expect(data).to.not.equal(null);
                         expect(data).to.not.equal(null);
                         expect(data).exist(data.title);
+                    }).catch(error => {
+                        assert.fail(error);
+                        expect(error).exist(error.message);
+                    })
+                }, function (error) {
+                    assert.fail(error);
+                    expect(error).exist(error.message);
+                });
+            } else {
+                testLocal.skip();
+            }
+        }).catch((error) => {
+                testLocal.skip();
+            }
+        );
+    });
+
+    it('should login with localhost when healthy and test getDocuments', function () {
+        let testLocal = this;
+        let url = "http://localhost:7070/constellio";
+        verifyHealth().then((isHealthy) => {
+            if (isHealthy && isHealthy.status === 204) {
+                let testLogin = {
+                    url,
+                    username: "admin",
+                    password: "password"
+                };
+                let result = authenticate(testLogin);
+                result.then(function (auth) {
+                    console.log(auth);
+                    auth.url = url;
+                    getDocuments(auth, ["A01_numericDocumentWithSameCopy", "A01_numericProcesWithDifferentCopy"]).then(data => {
+                        console.log(data);
+                        expect(data).to.not.equal(null);
+                        expect(data).to.not.equal(null);
                     }).catch(error => {
                         assert.fail(error);
                         expect(error).exist(error.message);
