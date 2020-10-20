@@ -1,0 +1,1 @@
+export const CONSTELLIO_URL =  "http://localhost:7070/constellio";

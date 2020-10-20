@@ -1,2 +1,4 @@
 /dist/
 /_bundles/
+/node_modules/
+/.idea/

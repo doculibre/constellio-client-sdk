@@ -1,6 +1,7 @@
 import FacetValue from "./facet-value";
 import Sort from "./sort";
 import Record from "./record";
+import {Authentication} from "./authentication";
 
 export default class Query{
     sorts:Sort[];
@@ -21,4 +22,6 @@ export class AbstractQueryResults<T extends Record>{
 export class QueryResults extends AbstractQueryResults<Record>{    
 }
 
-export function search(query:Query, schemaTypes:string[]):QueryResults
+export interface searchFunc {
+    (authenticationObject: Authentication, query: Query, schemaTypes: string[]): Promise<QueryResults>
+}

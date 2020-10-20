@@ -1,5 +1,5 @@
-import {getCollections} from '../../src/services/CollectionService';
-import {authenticate} from '../../src/services/AuthenticationService';
+import {getCollections} from '../../src/services/collections/CollectionService';
+import {authenticate} from '../../src/services/authentication/AuthenticationService';
 import {assert, expect} from 'chai';
 import sinon = require('sinon');
 import ConstellioCollection from "../../src/types/common/classes/constellio-collection";
@@ -47,8 +47,8 @@ describe('Collections', function () {
                     getCollections(auth).then(data => {
                         console.log(data);
                         expect(data).to.not.equal(null);
-                        expect(data).exist(data[0].code);
-                        expect(data).exist(data[0].title);
+                        let collection = data[0];
+                        expect(collection).to.have.all.keys('code','name','languages');
                     }).catch(error => {
                         assert.fail(error);
                         expect(error).exist(error.message);

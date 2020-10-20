@@ -1,6 +1,7 @@
 import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
+    LOGOUT,
     SET_MESSAGE,
 } from "./types";
 
@@ -17,13 +18,13 @@ export const login = (username:string, password:string, url:string) => (dispatch
             return Promise.resolve();
         },
         (error:any) => {
-            const message =
+            let message =
                 (error.response &&
                     error.response.data &&
                     error.response.data.message) ||
-                error.message ||
-                error.toString();
+                error.message;
 
+            message = message || "Constellio might be down!"
             dispatch({
                 type: LOGIN_FAIL,
             });
@@ -36,4 +37,12 @@ export const login = (username:string, password:string, url:string) => (dispatch
             return Promise.reject();
         }
     );
+};
+
+export const logout = () => (dispatch:any) => {
+    AuthService.logout();
+
+    dispatch({
+        type: LOGOUT,
+    });
 };

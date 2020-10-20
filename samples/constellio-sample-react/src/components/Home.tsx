@@ -1,32 +1,61 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 
-import UserService from "../services/user.service";
+import FolderService from "../services/folder.service";
+import {useDispatch, useSelector} from "react-redux";
+import {User} from "../types/user";
+import {Redirect} from "react-router-dom";
+import {useForm} from "react-hook-form";
+import {LoginInfo} from "../types/LoginInfo";
+import {getFolders} from "../actions/folders";
+import FolderList from "./folder/folderList";
 
-const Home = () => {
-    const [content, setContent] = useState("");
+const Home = (props: any) => {
+    const {register, handleSubmit} = useForm<LoginInfo>();
 
-    useEffect(() => {
-        setContent("");
-        // UserService.getPublicContent().then(
-        //     (response) => {
-        //         setContent(response.data);
-        //     },
-        //     (error) => {
-        //         const _content =
-        //             (error.response && error.response.data) ||
-        //             error.message ||
-        //             error.toString();
-        //
-        //         setContent(_content);
-        //     }
-        // );
+    const [loading, setLoading] = useState(false);
+    const { isLoggedIn } = useSelector<any,any>(state => state.auth);
+    const [constellioElements, setConstellioElements] = useState([]);
+
+    const auth = useSelector<any, any>(state => state.auth);
+    const {token} = JSON.parse(auth.user || "{}");
+    const {message} = useSelector<any, any>(state => state.message);
+
+    const dispatch: any = useDispatch();
+
+
+    useEffect(()=> {
+        FolderService.getConstellioFolders(token, ["A01","A02", "A03"]).then(
+            (response: any) => {
+
+                setConstellioElements(response);
+            },
+            (error: any) => {
+                const _content =
+                    (error.response && error.response.data) ||
+                    error.message ||
+                    error.toString();
+
+                setConstellioElements(_content);
+            }
+        )
     }, []);
 
     return (
-        <div className="container">
-            <header className="jumbotron">
-                <h3>{content}</h3>
-            </header>
+        <div>
+        {isLoggedIn ? (
+                <div className="container">
+                    <header className="jumbotron">
+
+                    </header>
+                    <h3>Constellio Elements</h3>
+                    <div>
+                        <FolderList folders={constellioElements}></FolderList>
+                    </div>
+                </div>
+            ) : (
+            <h3>Constellio SAMPLE project</h3>
+            )
+        }
         </div>
     );
 };
