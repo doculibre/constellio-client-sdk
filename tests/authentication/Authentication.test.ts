@@ -1,4 +1,4 @@
-import {authenticate} from '../../src/services/AuthenticationService';
+import {authenticate} from '../../src/services/authentication/AuthenticationService';
 import {assert, expect} from 'chai';
 import sinon = require('sinon');
 import {Authentication} from "../../src/types/common/classes/authentication";

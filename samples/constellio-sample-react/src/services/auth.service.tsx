@@ -10,6 +10,11 @@ const login = (username:string, password:string, url:string) => {
         });
 };
 
+const logout = () => {
+    localStorage.removeItem("user");
+};
+
 export default {
-    login
+    login,
+    logout
 };

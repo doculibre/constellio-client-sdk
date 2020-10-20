@@ -1,0 +1,9 @@
+.display-hand{
+    cursor: pointer;
+}
+
+.bg-custom-panel-heading{
+    background-color: #197DE1;
+    color: #fff;
+    border-color: #197DE1;
+}

@@ -22,24 +22,35 @@ export default class ConstellioService{
     static authenticate(authenticateObject: Login):Promise<any>
     static getCollections():ConstellioCollection[]
 
-    static search(query:Query, schemaTypes:string[]):QueryResults
+    static search(query: Query, schemaTypes: string[]): QueryResults
 
-    static searchDocuments(query:Query):DocumentQueryResults
-    static getDocument(id:string):Document
-    static getDocuments(ids:string[]):Document[]
-    static getDocumentSummary(id:string):Document
-    static getDocumentsSummaries(ids:string[]):Document[]
+    static searchDocuments(query: Query): DocumentQueryResults
 
-    static searchFolders(query:Query):FolderQueryResults
-    static getFolder(id:string):Folder
-    static getFolders(ids:string[]):Folder[]
-    static getFolderSummary(id:string):Folder
-    static getFoldersSummaries(ids:string[]):Folder[]
+    static getDocument(id: string): Document
 
-    static getRecord(id:string):Record
-    static getRecords(ids:string[]):Record[]
-    static getRecordSummary(id:string):Record
-    static getRecordsSummaries(ids:string[]):Record[]
+    static getDocuments(ids: string[]): Document[]
 
-    static getSchema(collection:string, schemaCode:string):Schema
+    static getDocumentSummary(id: string): Document
+
+    static getDocumentsSummaries(ids: string[]): Document[]
+
+    static searchFolders(query: Query): FolderQueryResults
+
+    static getFolder(id: string): Folder
+
+    static getFolders(ids: string[]): Folder[]
+
+    static getFolderSummary(id: string): Folder
+
+    static getFoldersSummaries(ids: string[]): Folder[]
+
+    static getRecord(id: string): Record
+
+    static getRecords(ids: string[]): Record[]
+
+    static getRecordSummary(id: string): Record
+
+    static getRecordsSummaries(ids: string[]): Record[]
+
+    static getSchema(collection: string, schemaCode: string): Schema
 }

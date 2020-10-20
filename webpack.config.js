@@ -3,8 +3,8 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: {
-        'constellio-sdk': './index.ts',
-        'constellio-sdk.min': './index.ts'
+        'constellio-sdk': './src/index.ts',
+        'constellio-sdk.min': './src/index.ts'
     },
     output: {
         path: path.resolve(__dirname, '_bundles'),
