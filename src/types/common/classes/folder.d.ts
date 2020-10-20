@@ -1,8 +1,6 @@
 import Query, {AbstractQueryResults} from "./query";
 import Record from "./record";
 import {Authentication} from "./authentication";
-import {DocumentQueryResults} from "./document";
-import htmlString = JQuery.htmlString;
 
 export default class Folder extends Record {
     createdOn?:string;

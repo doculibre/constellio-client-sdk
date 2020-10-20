@@ -12,7 +12,7 @@ export const getFolder: getFolderFunc = async (authenticationObject: Authenticat
     let headers = buildAuthenticatedHeader(authenticationObject.token);
     const generateUrl = authenticationObject.url + "/rest/" + API_VERSION + "/folders/" + id;
     return new Promise((resolve, reject) => {
-        axios.get(generateUrl, {headers})
+        axios.get(generateUrl, {headers, params: {filterMode: "ALL"}})
             .then(function (response: any) {
                 if (response.data) {
                     let data = buildFolderRecord(response.data);
@@ -32,7 +32,7 @@ export const getFolders: getFoldersFunc = (authenticationObject: Authentication,
     let promises: Promise<any>[] = [];
     for (let i = 0; i < ids.length || 0; i++) {
         promises[i] = new Promise((resolve, reject) => {
-            axios.get(generateUrl + ids[i], {headers}).then(function (response: any) {
+            axios.get(generateUrl + ids[i], {headers, params: {filterMode: "ALL"}}).then(function (response: any) {
                 if (response.data) {
                     let data = buildFolderRecord(response.data);
                     resolve(data);
@@ -55,7 +55,8 @@ export const getFolderSummary: getFolderSummaryFunc = (authenticationObject: Aut
         axios.get(generateUrl, {headers})
             .then(function (response: any) {
                 if (response.data) {
-                    resolve(response.data);
+                    let data = buildFolderRecord(response.data);
+                    resolve(data);
                 } else {
                     reject({message: response.data, error: "Could not fetch Constellio folders " + id});
                 }
@@ -73,7 +74,8 @@ export const getFoldersSummaries: getFoldersSummariesFunc = (authenticationObjec
         promises[i] = new Promise((resolve, reject) => {
             axios.get(generateUrl + ids[i], {headers}).then(function (response: any) {
                 if (response.data) {
-                    resolve(response.data);
+                    let data = buildFolderRecord(response.data);
+                    resolve(data);
                 } else {
                     reject({message: response.data, error: "Could not fetch Constellio folders " + ids[i]});
                 }

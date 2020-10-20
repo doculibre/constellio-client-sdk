@@ -54,7 +54,7 @@ describe('Documents', function () {
                         console.log(data);
                         expect(data).to.not.equal(null);
                         expect(data).to.not.equal(null);
-                        expect(data).exist(data.title);
+                        expect(data.title).to.not.equal(null);
                     }).catch(error => {
                         assert.fail(error);
                         expect(error).exist(error.message);

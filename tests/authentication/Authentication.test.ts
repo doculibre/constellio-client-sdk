@@ -26,14 +26,14 @@ describe('authenticate', function () {
     });
 
     const verifyHealth = async (): Promise<any> => {
-        let localHostHealth = await axios.get("http://localhost:7070/constellio/rest/"+API_VERSION+"/health");
+        let localHostHealth = await axios.get("http://localhost:7070/constellio/rest/" + API_VERSION + "/health");
         return localHostHealth;
     }
 
     it('should login with localhost when healthy', function () {
         let testLocal = this;
         verifyHealth().then((isHealthy) => {
-            if(isHealthy && isHealthy.status === 204) {
+            if (isHealthy && isHealthy.status === 204) {
                 let testLogin = {
                     url: "http://localhost:7070/constellio",
                     username: "admin",
@@ -49,31 +49,30 @@ describe('authenticate', function () {
                     assert.fail(error);
                     expect(error).exist(error.message);
                 });
-            }
-            else{
+            } else {
                 testLocal.skip();
             }
         }).catch((error) => {
-            testLocal.skip();
+                testLocal.skip();
             }
         );
     });
 
-        it("on empty password, should return string", (done) => {
-            const error = new Promise((r) => r({data:"Parameter 'password' required"}));
-            sandbox.stub(axios, "get").returns(error);
-            authenticate(stubLogin)
-                .catch((error) => {
-                    expect(error.message)
-                        .to.equal("Parameter 'password' required");
-                })
-                .then(done, done);
-            setTimeout(() => server.respond([200,
-                {'Content-Type': 'application/json'}, '[]']), 0);
-        });
+    it("on empty password, should return string", (done) => {
+        const error = new Promise((r) => r({data: "Parameter 'password' required"}));
+        sandbox.stub(axios, "get").returns(error);
+        authenticate(stubLogin)
+            .catch((error) => {
+                expect(error.message)
+                    .to.equal("Parameter 'password' required");
+            })
+            .then(done, done);
+        setTimeout(() => server.respond([200,
+            {'Content-Type': 'application/json'}, '[]']), 0);
+    });
 
     it("on empty username, should return string", (done) => {
-        const error = new Promise((r) => r({data:"Parameter 'username' required"}));
+        const error = new Promise((r) => r({data: "Parameter 'username' required"}));
         sandbox.stub(axios, "get").returns(error);
         authenticate(stubLogin)
             .catch((error) => {
@@ -85,22 +84,22 @@ describe('authenticate', function () {
             {'Content-Type': 'application/json'}, '[]']), 0);
     });
 
-        it('should display the data', (done) => {
-            const data: String = "<response>\n" +
-                "<serviceKey>agent_admin</serviceKey>" +
-                "<token>b538e7fb-08cf-11eb-a794-45538ece1264</token>" +
-                "</response>";
-            const resolved = new Promise((r) => r({data}));
-            sandbox.stub(axios, "get").returns(resolved);
-            authenticate(stubLogin)
-                .then((result) => {
-                    expect(result.token)
-                        .to.equal("b538e7fb-08cf-11eb-a794-45538ece1264");
-                    expect(result.serviceKey)
-                        .to.equal("agent_admin");
-                })
-                .then(done, done);
-            setTimeout(() => server.respond([200,
-                {'Content-Type': 'application/json'}, '[]']), 0);
-        });
+    it('should display the data', (done) => {
+        const data: String = "<response>\n" +
+            "<serviceKey>agent_admin</serviceKey>" +
+            "<token>b538e7fb-08cf-11eb-a794-45538ece1264</token>" +
+            "</response>";
+        const resolved = new Promise((r) => r({data}));
+        sandbox.stub(axios, "get").returns(resolved);
+        authenticate(stubLogin)
+            .then((result) => {
+                expect(result.token)
+                    .to.equal("b538e7fb-08cf-11eb-a794-45538ece1264");
+                expect(result.serviceKey)
+                    .to.equal("agent_admin");
+            })
+            .then(done, done);
+        setTimeout(() => server.respond([200,
+            {'Content-Type': 'application/json'}, '[]']), 0);
     });
+});

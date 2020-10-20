@@ -12,7 +12,7 @@ export const getDocument: getDocumentFunc = async (authenticationObject: Authent
     let headers = buildAuthenticatedHeader(authenticationObject.token);
     const generateUrl = authenticationObject.url + "/rest/" + API_VERSION + "/documents/" + id;
     return new Promise((resolve, reject) => {
-        axios.get(generateUrl, {headers}).then(response => {
+        axios.get(generateUrl, {headers, params: {filterMode: "ALL"}}).then(response => {
             if (response.data) {
                 let data = buildDocumentRecord(response.data);
                 resolve(data);
@@ -31,7 +31,7 @@ export const getDocuments: getDocumentsFunc = async (authenticationObject: Authe
     let promises: Promise<any>[] = [];
     for (let i = 0; i < ids.length || 0; i++) {
         promises[i] = new Promise((resolve, reject) => {
-            axios.get(generateUrl + ids[i], {headers}).then(response => {
+            axios.get(generateUrl + ids[i], {headers, params: {filterMode: "ALL"}}).then(response => {
                 if (response.data) {
                     let data = buildDocumentRecord(response.data);
                     resolve(data);
@@ -53,7 +53,8 @@ export const getDocumentSummary: getDocumentSummaryFunc = (authenticationObject:
     return new Promise((resolve, reject) => {
         axios.get(generateUrl, {headers}).then(response => {
             if (response.data) {
-                resolve(response.data);
+                let data = buildDocumentRecord(response.data);
+                resolve(data);
             } else {
                 reject({message: response.data, error: "Could not fetch Constellio documents " + id});
             }
@@ -71,7 +72,8 @@ export const getDocumentsSummaries: getDocumentsSummariesFunc = (authenticationO
         promises[i] = new Promise((resolve, reject) => {
             axios.get(generateUrl + ids[i], {headers}).then(response => {
                 if (response.data) {
-                    resolve(response.data);
+                    let data = buildDocumentRecord(response.data);
+                    resolve(data);
                 } else {
                     reject({message: response.data, error: "Could not fetch Constellio documents " + ids[i]});
                 }
