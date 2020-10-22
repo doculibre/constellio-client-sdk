@@ -1,9 +1,9 @@
-import {getSchemaFunc} from "../types/common/services/constellio-service";
-import {Authentication} from "../types/common/classes/authentication";
+import {getSchemaFunc} from "../../types/common/services/constellio-service";
+import {Authentication} from "../../types/common/classes/authentication";
 import axios from "axios";
-import Schema from "../types/common/classes/schema";
+import Schema from "../../types/common/classes/schema";
 import {parse} from "node-html-parser";
-import Metadata from "../types/common/classes/metadata";
+import Metadata from "../../types/common/classes/metadata";
 
 export const getSchema:getSchemaFunc = (authentication:Authentication, collection:string, schemaCode:string):Promise<Schema> => {
     const generateUrl = `${authentication.url}/getSchemaMetadatas?collection=${collection}&schema=${schemaCode}`;

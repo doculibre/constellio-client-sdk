@@ -3,7 +3,7 @@ import sinon = require("sinon");
 import {API_VERSION} from "../../src/constant";
 import {authenticate} from "../../src";
 import {assert, expect } from "chai";
-import {getSchema} from "../../src/services/SchemaService";
+import {getSchema} from "../../src/services/schemas/SchemaService";
 
 describe('getSchemas Tests', function () {
     const serverUrl = "http://localhost:7070/constellio";

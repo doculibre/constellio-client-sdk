@@ -8,13 +8,23 @@ import {useForm} from "react-hook-form";
 import {LoginInfo} from "../types/LoginInfo";
 import {getFolders} from "../actions/folders";
 import FolderList from "./folder/folderList";
+import {CONSTELLIO_URL} from "../config";
+import {login} from "../actions/auth";
+import {search} from "../actions/search";
+import RecordList from "./record/recordList";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
+interface SearchObject {
+    expression: string
+}
 
 const Home = (props: any) => {
-    const {register, handleSubmit} = useForm<LoginInfo>();
+    const {register, handleSubmit} = useForm<SearchObject>();
 
     const [loading, setLoading] = useState(false);
-    const { isLoggedIn } = useSelector<any,any>(state => state.auth);
-    const [constellioElements, setConstellioElements] = useState([]);
+    const {isLoggedIn} = useSelector<any, any>(state => state.auth);
+    const {results} = useSelector<any, any>(state => state.search || []);
 
     const auth = useSelector<any, any>(state => state.auth);
     const {token} = JSON.parse(auth.user || "{}");
@@ -23,39 +33,60 @@ const Home = (props: any) => {
     const dispatch: any = useDispatch();
 
 
-    useEffect(()=> {
-        FolderService.getConstellioFolders(token, ["A01","A02", "A03"]).then(
-            (response: any) => {
+    const handleSearch = (searchObject: SearchObject) => {
+        setLoading(true);
 
-                setConstellioElements(response);
-            },
-            (error: any) => {
-                const _content =
-                    (error.response && error.response.data) ||
-                    error.message ||
-                    error.toString();
-
-                setConstellioElements(_content);
-            }
-        )
-    }, []);
+        dispatch(search(token, searchObject.expression))
+            .then(() => {
+                setLoading(false);
+            })
+            .catch(() => {
+                setLoading(false);
+            });
+    }
 
     return (
         <div>
-        {isLoggedIn ? (
+            {isLoggedIn ? (
                 <div className="container">
                     <header className="jumbotron">
 
                     </header>
-                    <h3>Constellio Elements</h3>
+                    <h3>Constellio Search</h3>
+                    <div className="form-group">
+                        <form className="form-inline d-flex justify-content-center md-form form-sm" onSubmit={handleSubmit(handleSearch)}>
+                                <input
+                                    type="text"
+                                    placeholder="Search"
+                                    className="form-control form-control-sm mr-3 w-7"
+                                    name="expression"
+                                    ref={register({required: true})}
+                                />
+                            <button className="btn btn-primary" disabled={loading}>
+                                {loading && (
+                                    <span className="spinner-border spinner-border-sm"></span>
+                                )}
+                                <FontAwesomeIcon icon={faSearch} />
+                            </button>
+
+                            {message && (
+                                <div className="form-group">
+                                    <div className="alert alert-danger" role="alert">
+                                        {message}
+                                    </div>
+                                </div>
+                            )}
+                        </form>
+                    </div>
+
                     <div>
-                        <FolderList folders={constellioElements}></FolderList>
+                        <RecordList folders={results}></RecordList>
                     </div>
                 </div>
             ) : (
-            <h3>Constellio SAMPLE project</h3>
+                <h3>Constellio SAMPLE project</h3>
             )
-        }
+            }
         </div>
     );
 };

@@ -79,3 +79,30 @@ label {
 .Logo {
   background-image: url(./Logo.png);
 }
+.headline-md,form{
+  display:inline-block !important;
+}
+
+.headline-md{
+  margin-right:15px !important;
+  padding-bottom: 30px;
+}
+
+.search-container{
+  border: 1px;
+  border-bottom-color: #111111;
+}
+
+.search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.search-container input[type=text] {
+
+  width: 90%;
+}

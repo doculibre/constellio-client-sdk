@@ -47,7 +47,6 @@ const Login = (props: any) => {
 
                 <form onSubmit={handleSubmit(handleLogin)}>
                     <div className="form-group">
-                        <label htmlFor="url">url Constellio</label>
                         <input
                             type="hidden"
                             className="form-control"

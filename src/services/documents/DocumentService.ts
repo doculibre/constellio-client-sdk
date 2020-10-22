@@ -97,7 +97,7 @@ const buildIdsParam = (ids: string[]): string => {
     return ids.join(",");
 }
 
-const buildDocumentRecord = (record: Document): Document => {
+export const buildDocumentRecord = (record: Document): Document => {
 
     if (record.metadatas) {
         record.hasContent = (record.metadatas.hasContent && record.metadatas.hasContent[0] && record.metadatas.hasContent[0] === 'true') || false;

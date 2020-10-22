@@ -15,6 +15,7 @@ import { history } from "./components/helpers/history";
 import {User} from "./types/user";
 import { Dropdown } from "react-bootstrap";
 import CollectionService from "./services/collection.service";
+import FolderPage from "./components/folder/FolderPage";
 
 const App = () => {
 
@@ -82,6 +83,11 @@ const App = () => {
 
             {currentUser ? (
                 <div className="navbar-nav ml-auto">
+                  <li className="nav-item">
+                    <a href="/folders" className="nav-link">
+                      Folders
+                    </a>
+                  </li>
                   <li className="nav-far-item">
                     <select className="nav-select" name="collections" id="collectionsConstellio">
                       {options}
@@ -108,6 +114,7 @@ const App = () => {
             <Switch>
               <Route exact path={["/", "/home"]} component={Home} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/folders" component={FolderPage} />
             </Switch>
           </div>
         </div>

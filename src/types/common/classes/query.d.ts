@@ -4,24 +4,25 @@ import Record from "./record";
 import {Authentication} from "./authentication";
 
 export default class Query{
-    sorts:Sort[];
-    freeText:string;
-    fieldFacets:string[];
-    start:number;
-    rows:number;
-    collection:string
-    constructor(collection:string);
+    collection:string;
+    schemaTypes:string[];
+    sorting:Sort[];
+    facetMode:number;
+    expression:string;
+    rowsStart?:number;
+    rowsLimit?:number;
+    requireWriteAccess:boolean;
 }
 
 export class AbstractQueryResults<T extends Record>{
     numFound:number;
     results:T[];
-    facetResults:{key:string, value:FacetValue[]}[];
+    facetResults?:{key:string, value:FacetValue[]}[];
 }
 
 export class QueryResults extends AbstractQueryResults<Record>{    
 }
 
 export interface searchFunc {
-    (authenticationObject: Authentication, query: Query, schemaTypes: string[]): Promise<QueryResults>
+    (authenticationObject: Authentication, query: Query): Promise<QueryResults>
 }

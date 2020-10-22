@@ -99,7 +99,7 @@ const buildIdsParam = (ids: string[]): string => {
     return ids.join(",");
 }
 
-const buildFolderRecord = (record: Folder): Folder => {
+export const buildFolderRecord = (record: Folder): Folder => {
     if (record.metadatas) {
         record.hasContent = (record.metadatas.hasContent && record.metadatas.hasContent[0] && record.metadatas.hasContent[0] === 'true') || false;
         record.modifiedOn = record.metadatas.modifiedOn && record.metadatas.modifiedOn[0];

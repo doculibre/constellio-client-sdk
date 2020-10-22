@@ -10,7 +10,7 @@ import axios from "axios";
 
 export const getRecord: getRecordFunc = async (authenticationObject: Authentication, id: string): Promise<Record> => {
     let headers = buildAuthenticatedHeader(authenticationObject.token);
-    const generateUrl = authenticationObject.url + "/rest/" + API_VERSION + "/records/";
+    const generateUrl = authenticationObject.url + "/rest/" + API_VERSION + "/records";
     return new Promise((resolve, reject) => {
         axios.get(generateUrl, {headers, params: {filterMode: "ALL", ids:id}})
             .then(function (response: any) {
@@ -28,7 +28,7 @@ export const getRecord: getRecordFunc = async (authenticationObject: Authenticat
 
 export const getRecords: getRecordsFunc = (authenticationObject: Authentication, ids: string[]): Promise<Record[]> => {
     let headers = buildAuthenticatedHeader(authenticationObject.token);
-    const generateUrl = authenticationObject.url + "/rest/" + API_VERSION + "/records/";
+    const generateUrl = authenticationObject.url + "/rest/" + API_VERSION + "/records";
     let params = new URLSearchParams();
     for(let id of ids){
         params.append("ids", id);
@@ -51,7 +51,7 @@ export const getRecords: getRecordsFunc = (authenticationObject: Authentication,
 
 export const getRecordSummary: getRecordSummaryFunc = (authenticationObject: Authentication, id: string): Promise<any> => {
     let headers = buildAuthenticatedHeader(authenticationObject.token);
-    const generateUrl = authenticationObject.url + "/rest/" + API_VERSION + "/records/" + id;
+    const generateUrl = authenticationObject.url + "/rest/" + API_VERSION + "/records";
     return new Promise((resolve, reject) => {
         axios.get(generateUrl, {headers, params: { ids: id}})
             .then(function (response: any) {
@@ -69,7 +69,7 @@ export const getRecordSummary: getRecordSummaryFunc = (authenticationObject: Aut
 
 export const getRecordsSummaries: getRecordsSummariesFunc = (authenticationObject: Authentication, ids: string[]): Promise<any> => {
     let headers = buildAuthenticatedHeader(authenticationObject.token);
-    const generateUrl = authenticationObject.url + "/rest/" + API_VERSION + "/records/";
+    const generateUrl = authenticationObject.url + "/rest/" + API_VERSION + "/records";
     let params = new URLSearchParams();
     for(let id in ids){
         params.append("ids", id);
