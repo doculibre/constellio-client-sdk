@@ -1,28 +1,28 @@
 import {useState} from "react";
 
-import RecordElement from './recordElement';
+import DocumentElement from './documentElement';
 import React from "react";
-import './record.css';
-import {faFolder, faFile, faQuestion} from "@fortawesome/free-solid-svg-icons";
+import './document.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faFile, faFolder, faQuestion} from "@fortawesome/free-solid-svg-icons";
 
-interface RuleListProps {
-    record: RecordElement
+interface DocumentListProps {
+    document: DocumentElement
 };
 
-export default function RecordPrint(props: RuleListProps) {
-    const [folded, setFolded] = useState(!props.record.schemaType);
+export default function DocumentPrint(props: DocumentListProps) {
+    const [folded, setFolded] = useState(!props.document.schemaType);
 
-    const fold = () =>{
+    const fold = () => {
         setFolded(!folded);
     }
 
-    const printMetadata = (record: any) => {
-        if (record && record.metadatas) {
+    const printMetadata = (document: any) => {
+        if (document && document.metadatas) {
             return (<ul>
-                {Object.keys(record.metadatas).map((keyName, i) => (
+                {Object.keys(document.metadatas).map((keyName, i) => (
                     <li key={i}>
-                        <span className="input-label"><b>{keyName}</b> : {record.metadatas[keyName]}</span>
+                        <span className="input-label"><b>{keyName}</b> : {document.metadatas[keyName]}</span>
                     </li>
                 ))}
             </ul>);
@@ -33,7 +33,7 @@ export default function RecordPrint(props: RuleListProps) {
     }
 
     const printIcon = (schemaType:string) => {
-        if(schemaType && schemaType.includes("folder")){
+        if(schemaType && schemaType.includes("document")){
             return <FontAwesomeIcon className="fa-record" icon={faFolder} />
         }
         else if(schemaType && schemaType.includes("document")){
@@ -49,23 +49,22 @@ export default function RecordPrint(props: RuleListProps) {
         <div>
             <div className="panel panel-primary">
                 <div className="panel-heading display-hand" role="presentation" onClick={fold}>
-                    {printIcon(props.record.schemaType)}
-
-                    {props.record.title || props.record.metadatas.title}
+                    {printIcon(props.document.schemaType)}
+                    {props.document.title || props.document.metadatas.title}
                     {folded ?
-                        (<i className="pull-right glyphicon glyphicon-chevron-up" />) :
-                        (<i className="pull-right glyphicon glyphicon-chevron-down" />)
+                        (<i className="pull-right glyphicon glyphicon-chevron-up"/>) :
+                        (<i className="pull-right glyphicon glyphicon-chevron-down"/>)
                     }
                 </div>
                 <div className="panel-body" hidden={folded}>
-                    {printMetadata(props.record)}
+                    {printMetadata(props.document)}
                 </div>
                 <div className="panel-footer">
                     <div className="btn-toolbar">
-                        <span>{props.record.metadatas.parent}</span>
+                        <span>{props.document.metadatas.parent}</span>
                         <div className="btn-group btn-group-xs pull-right">
                             <button className="btn btn-primary" title="Update">
-                                <i className="glyphicon glyphicon-pencil" />
+                                <i className="glyphicon glyphicon-pencil"/>
                             </button>
                         </div>
                     </div>

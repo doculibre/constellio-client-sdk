@@ -10,7 +10,7 @@ interface RecordListProps{
 export default function RecordList(Props:RecordListProps){
     let elements:any = [];
     if( Props.folders) {
-         elements = Props.folders.map(item => (<FolderPrint folder={item}></FolderPrint>));
+         elements = Props.folders.map(item => (<FolderPrint record={item}></FolderPrint>));
     }
 
     return (

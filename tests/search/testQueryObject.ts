@@ -1,9 +1,10 @@
 import Query from "../../src/types/common/classes/query";
 
 export const queryObject1:Query = {
+    facetValueIds: [],
     collection: "zeCollection",
     expression: "abeille",
-    facetMode: 0,
+    facetMode: 1,
     requireWriteAccess: false,
     rowsLimit: 100,
     rowsStart: 0,

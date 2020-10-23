@@ -17,6 +17,9 @@ import { Dropdown } from "react-bootstrap";
 import CollectionService from "./services/collection.service";
 import FolderPage from "./components/folder/FolderPage";
 
+import DocumentPage from "./components/document/DocumentPage";
+
+
 const App = () => {
 
     const { user: currentUser } = useSelector<any,any>((state) => state.auth);
@@ -87,7 +90,11 @@ const App = () => {
                     <a href="/folders" className="nav-link">
                       Folders
                     </a>
-                  </li>
+                  </li> <li className="nav-item">
+                  <a href="/documents" className="nav-link">
+                    Documents
+                  </a>
+                </li>
                   <li className="nav-far-item">
                     <select className="nav-select" name="collections" id="collectionsConstellio">
                       {options}
@@ -115,6 +122,7 @@ const App = () => {
               <Route exact path={["/", "/home"]} component={Home} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/folders" component={FolderPage} />
+              <Route exact path="/documents" component={DocumentPage} />
             </Switch>
           </div>
         </div>

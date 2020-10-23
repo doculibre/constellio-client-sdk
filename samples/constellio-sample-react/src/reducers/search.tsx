@@ -14,6 +14,7 @@ export default function (state = initialState, action: any) {
                 ...state,
                 data: payload.data,
                 results:payload.data.results,
+                facets:payload.data.facetResults,
             };
         case SEARCH_FAILURE:
             return {

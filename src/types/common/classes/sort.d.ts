@@ -1,4 +1,4 @@
 export default class Sort{
-    metadataCode:string;
+    metadata:string;
     ascending:boolean;
 }
